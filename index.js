@@ -1,7 +1,7 @@
 const consultURLMudi = 'https://viewer.mudi.com.co:3589/api/mudiV1';
 const nameCurrentCompany = location.host.split('.')[1] || 'prueba';
 
-/** Función para poner una nueva fecha local */
+/** Función para poner una nueva fecha local ✅*/
 function localDater() {
   let year = new Date().getFullYear();
   let Mont = new Date().getMonth() + 1;
@@ -102,9 +102,15 @@ class Mudi_Sesion {
 
   /** Método para obtener la ciudad de la consulta  */
   async geolocalization() {
-    const response = await fetch('https://ipapi.co/json/');
-    const responseJSON = await response.json();
-    return responseJSON.city
+    try {
+      const response = await fetch('https://ipapi.co/json/');
+      const responseJSON = await response.json();
+      return responseJSON.city
+    } catch (error) {
+      console.error(`MudiError: no pudimos conectar con el api`)
+      console.error(error)
+    }
+
   };
 
   /** Método para obtener el dispositivo de la consulta x ancho de pantalla */
@@ -195,6 +201,7 @@ class Mudi_Page {
 
   constructor() {
     this.#idPage;
+    this.myInterval;
     this.timeSession = 0;
   };
 
@@ -209,9 +216,17 @@ class Mudi_Page {
 
   /** Método para contabilizar el tiempo en la pagina de usuario. */
   setCounterTimeSession() {
-    setInterval(() => {
-      this.timeSession++
+    this.myInterval = setInterval(() => {
+      this.timeSession++;
+      if (this.timeSession == 5) this.updateTimeSession();
+      else if (this.timeSession % 15 == 0) this.updateTimeSession();
     }, 1000);
+  };
+
+  /** Método para para el tiempo del usuario */
+  stopInteval() {
+    clearInterval(this.myInterval);
+    this.myInterval = null;
   };
 
   /** Método que nos permite iniciar el tracking al momento que se abre la página */
@@ -390,7 +405,10 @@ class Mudi_Page {
 
 const mudi_page = new Mudi_Page();
 mudi_page.initPageTrack();
-window.addEventListener('visibilitychange', () => mudi_page.updateTimeSession());
+window.addEventListener('visibilitychange', () => {
+  mudi_page.updateTimeSession();
+  document.visibilityState === 'visible' ? mudi_page.setCounterTimeSession() : mudi_page.stopInteval();
+});
 window.mudiPage = mudi_page;
 
 
@@ -438,6 +456,7 @@ class Mudi_Purchase {
         };
 
         this.clickButonPurchase(data);
+        console.log(data)
       }, 2500)
 
     };
@@ -447,6 +466,7 @@ class Mudi_Purchase {
   clickButonPurchase(data) {
 
     document.body.querySelector('.send-event-purchase').addEventListener('click', async () => {
+      debugger;
       try {
         const request = await fetch(`${consultURLMudi}/createPurchaseAmoblandoPullman`, {
           method: 'POST',
@@ -465,5 +485,3 @@ class Mudi_Purchase {
 
 const mudi_purchase = new Mudi_Purchase();
 mudi_purchase.verifyPurchase();
-
-console.log('probando...')
