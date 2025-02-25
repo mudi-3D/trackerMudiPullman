@@ -444,12 +444,12 @@ class Mudi_Purchase {
 
         /** data for purchase */
         const data = {
-          id_session: null,
-          id_user: null,
+          id_session: localStorage.getItem('Tracker_Mudi_idSession'),
+          id_user: localStorage.getItem('Tracker_Mudi_idUser'),
           idOrder: document.querySelector("#fc-ei").value,
-          subTotalValue: document.querySelector('[data-subtotal-tax]').innerHTML.replace('$', ''),
-          travelValue: document.getElementById('data-shipping').innerText.replace('$', ''),
-          ivaValue: document.getElementById('data-iva').innerHTML.replace('$', ''),
+          subTotalValue: document.querySelector('[data-subtotal-tax]').innerHTML.replace('$', '').replace(/\./g, ""),
+          travelValue: document.getElementById('data-shipping').innerText.replace('$', '').replace(/\./g, ""),
+          ivaValue: document.getElementById('data-iva').innerHTML.replace('$', '').replace(/\./g, ""),
           company: nameCurrentCompany,
           interacionUser: localStorage.getItem('Tracker_Mudi_interactionSession'),
           detailProductsPurchase: totalProducts
