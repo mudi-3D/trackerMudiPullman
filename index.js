@@ -133,7 +133,7 @@ class Mudi_Sesion {
       id_user: mudi_user.getIdUser,
       device: this.getDevice(),
       company: nameCurrentCompany,
-      location: geoLoc
+      location: geoLoc || 'undefined'
     };
 
     try {
@@ -456,7 +456,7 @@ class Mudi_Purchase {
         };
 
         this.clickButonPurchase(data);
-        console.log(data)
+
       }, 2500)
 
     };
