@@ -405,10 +405,6 @@ class Mudi_Page {
 
 const mudi_page = new Mudi_Page();
 mudi_page.initPageTrack();
-window.addEventListener('visibilitychange', () => {
-  mudi_page.updateTimeSession();
-  document.visibilityState === 'visible' ? mudi_page.setCounterTimeSession() : mudi_page.stopInteval();
-});
 window.mudiPage = mudi_page;
 
 
@@ -485,3 +481,10 @@ class Mudi_Purchase {
 
 const mudi_purchase = new Mudi_Purchase();
 mudi_purchase.verifyPurchase();
+
+
+
+window.addEventListener('visibilitychange', () => {
+  mudi_page.updateTimeSession();
+  document.visibilityState === 'visible' ? mudi_page.setCounterTimeSession() : mudi_page.stopInteval();
+});
