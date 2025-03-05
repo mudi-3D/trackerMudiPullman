@@ -11,7 +11,7 @@ function localDater() {
   let secs = new Date().getSeconds();
 
   Mont < 10 && (Mont = `0${Mont}`);
-  day < 10 && (day = `0${Mont}`);
+  day < 10 && (day = `0${day}`);
   hour < 10 && (hour = `0${hour}`);
   minute < 10 && (minute = `0${minute}`);
   secs < 10 && (secs = `0${secs}`);
