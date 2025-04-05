@@ -261,7 +261,8 @@ class Mudi_Page {
 
         const params = location.hash;
         const path = location.pathname == '/' ? '/' : 'false';
-        const skuPDP = document.querySelector('#dt-google-psku').innerHTML ?? '0';
+        const containerSku = document.querySelector('#dt-google-psku');
+        const skuPDP = containerSku ? document.querySelector('#dt-google-psku').innerHTML : '0';
 
         this.setCounterTimeSession();
 
