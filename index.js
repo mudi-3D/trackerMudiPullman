@@ -517,7 +517,6 @@ class Mudi_Purchase {
     clickButonPurchase(data) {
 
         document.body.querySelector('.send-event-purchase').addEventListener('click', async () => {
-            debugger;
             try {
                 const request = await fetch(`${consultURLMudi}/createPurchaseAmoblandoPullman`, {
                     method: 'POST',
